@@ -11,6 +11,17 @@ public class materia {
     private int Año;
     private boolean Estado;
 
+    public materia() {
+    }
+
+    public materia(String Nombre, int Año, boolean Estado) {
+        this.Nombre = Nombre;
+        this.Año = Año;
+        this.Estado = Estado;
+    }
+    
+    
+
     public materia(int idMateria, String Nombre, int Año, boolean Estado) {
         this.idMateria = idMateria;
         this.Nombre = Nombre;
