@@ -6,24 +6,33 @@ package b.Entidades;
  * @author Nahue
  */
 public class inscripcion {
-    private int idMateria;
+    private int idIncripcion;
     private String Nombre;
     private int Año;
     private boolean Estado;
 
-    public inscripcion(int idMateria, String Nombre, int Año, boolean Estado) {
-        this.idMateria = idMateria;
+    public inscripcion() {
+    }
+
+    public inscripcion(String Nombre, int Año, boolean Estado) {
         this.Nombre = Nombre;
         this.Año = Año;
         this.Estado = Estado;
     }
 
-    public int getIdMateria() {
-        return idMateria;
+    public inscripcion(int idIncripcion, String Nombre, int Año, boolean Estado) {
+        this.idIncripcion = idIncripcion;
+        this.Nombre = Nombre;
+        this.Año = Año;
+        this.Estado = Estado;
     }
 
-    public void setIdMateria(int idMateria) {
-        this.idMateria = idMateria;
+    public int getIdIncripcion() {
+        return idIncripcion;
+    }
+
+    public void setIdIncripcion(int idIncripcion) {
+        this.idIncripcion = idIncripcion;
     }
 
     public String getNombre() {
@@ -49,6 +58,6 @@ public class inscripcion {
     public void setEstado(boolean Estado) {
         this.Estado = Estado;
     }
-    
+
     
 }
