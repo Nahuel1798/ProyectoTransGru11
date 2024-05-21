@@ -6,58 +6,62 @@ package b.Entidades;
  * @author Nahue
  */
 public class inscripcion {
-    private int idIncripcion;
-    private String Nombre;
-    private int Año;
-    private boolean Estado;
+    private int idIncripto;
+    private alumno alumno;
+    private materia materia;
+    private int Nota;
 
     public inscripcion() {
     }
 
-    public inscripcion(String Nombre, int Año, boolean Estado) {
-        this.Nombre = Nombre;
-        this.Año = Año;
-        this.Estado = Estado;
+    public inscripcion(int idIncripto, alumno alumno, materia materia, int nota) {
+        this.idIncripto = idIncripto;
+        this.alumno = alumno;
+        this.materia = materia;
+        this.Nota = nota;
     }
 
-    public inscripcion(int idIncripcion, String Nombre, int Año, boolean Estado) {
-        this.idIncripcion = idIncripcion;
-        this.Nombre = Nombre;
-        this.Año = Año;
-        this.Estado = Estado;
+    public inscripcion(alumno alumno, materia materia, int nota) {
+        this.alumno = alumno;
+        this.materia = materia;
+        this.Nota = nota;
     }
 
-    public int getIdIncripcion() {
-        return idIncripcion;
+    public int getIdIncripto() {
+        return idIncripto;
     }
 
-    public void setIdIncripcion(int idIncripcion) {
-        this.idIncripcion = idIncripcion;
+    public void setIdIncripto(int idIncripto) {
+        this.idIncripto = idIncripto;
     }
 
-    public String getNombre() {
-        return Nombre;
+    public alumno getAlumno() {
+        return alumno;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setAlumno(alumno alumno) {
+        this.alumno = alumno;
     }
 
-    public int getAño() {
-        return Año;
+    public materia getMateria() {
+        return materia;
     }
 
-    public void setAño(int Año) {
-        this.Año = Año;
+    public void setMateria(materia materia) {
+        this.materia = materia;
     }
 
-    public boolean isEstado() {
-        return Estado;
+    public double getNota() {
+        return Nota;
     }
 
-    public void setEstado(boolean Estado) {
-        this.Estado = Estado;
+    public void setNota(int nota) {
+        this.Nota = nota;
     }
 
-    
+    @Override
+    public String toString() {
+        return "idIncripto: " + idIncripto + " idAlumno: " + alumno + " idMateria: " + materia + " Nota: " + Nota;
+    }
+        
 }
