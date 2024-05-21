@@ -20,14 +20,15 @@ public class alumnoData {
     }
 
     public void guardarAlumno(alumno alumnos) {
-        String sql = "INSERT INTO alumno(Dni,Apellido,Nombre,fechaNacimiento,Estado VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO alumno(idAlumno,Dni,Apellido,Nombre,fechaNacimiento,Estado) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, alumnos.getDni());
-            ps.setString(2, alumnos.getApellido());
-            ps.setString(3, alumnos.getNombre());
-            ps.setDate(4, Date.valueOf(alumnos.getFechaNacimiento()));//localDate a Date
-            ps.setBoolean(5, alumnos.isEstado()); // if reducido
+            ps.setInt(1, alumnos.getIdAlumno());
+            ps.setInt(2, alumnos.getDni());
+            ps.setString(3, alumnos.getApellido());
+            ps.setString(4, alumnos.getNombre());
+            ps.setDate(5, Date.valueOf(alumnos.getFechaNacimiento()));//localDate a Date
+            ps.setBoolean(6, alumnos.isEstado()); // if reducido
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {

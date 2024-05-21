@@ -61,5 +61,10 @@ public class materia {
         this.Estado = Estado;
     }
     
+    @Override
+    public String toString() {
+        return "Materia (" + "idMateria: " + idMateria + " Nombre: " +  Nombre + " Anio: " + Año + ")";
+    }
+    
     
 }

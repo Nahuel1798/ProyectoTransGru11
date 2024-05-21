@@ -82,6 +82,11 @@ public class alumno {
     public void setEstado(boolean Estado) {
         this.Estado = Estado;
     }
+
+    @Override
+    public String toString() {
+        return "Alumno (" + "dni: " +  Dni + " Nombre: " + Nombre + " Apellido: " + Apellido + ")";
+    }
     
     
 }
