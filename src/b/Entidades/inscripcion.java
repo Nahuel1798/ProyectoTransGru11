@@ -51,7 +51,7 @@ public class inscripcion {
         this.materia = materia;
     }
 
-    public double getNota() {
+    public int getNota() {
         return Nota;
     }
 
