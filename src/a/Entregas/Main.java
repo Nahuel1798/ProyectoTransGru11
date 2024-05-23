@@ -126,15 +126,19 @@ public class Main {
         //Borrando inscripcion (Anda todo ok)
         //    inscData.borrarInscripcionMA(1, 2);
         
-        //Listando las inscripciones
-        for(inscripcion inscripciones : inscData.obtenerInscripciones()){
-            
-            System.out.println("id: " + inscripciones.getIdIncripto());
-            System.out.println("Apellido: " + inscripciones.getAlumno().getNombre()); //Pido el nombre porque esta al reves (donde esta el nombre puse el apellido xd)
-            System.out.println("Materia: " + inscripciones.getMateria().getNombre());
-            
+        //Listando las inscripciones  (Anda todo ok)
+//        for(inscripcion inscripciones : inscData.obtenerInscripciones()){
+//            
+//            System.out.println("id: " + inscripciones.getIdIncripto());
+//            System.out.println("Apellido: " + inscripciones.getAlumno().getNombre()); //Pido el nombre porque esta al reves (donde esta el nombre puse el apellido xd)
+//            System.out.println("Materia: " + inscripciones.getMateria().getNombre());
+//            
+//        }
+
+
+        for(materia materias:inscData.obtenerMateriasNOCursadas(1)){
+            System.out.println("nombre " + materias.getNombre());
         }
-        
         
         
         

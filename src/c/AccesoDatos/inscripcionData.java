@@ -190,7 +190,7 @@ public class inscripcionData {
          
             ArrayList<materia> materias = new ArrayList<>();
             
-            String sql = "SELECT *  FROM materia WHERE estado = 1 AND" 
+            String sql = "SELECT *  FROM materia WHERE estado = 1 AND " 
                     + "idMateria not in (SELECT idMateria FROM inscripcion WHERE idAlumno = ?)";
             
             try{
@@ -251,6 +251,8 @@ public class inscripcionData {
             return alumnosMateria;
             
         }
+        
+        
         
         
 }

@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
  */
 public class Conexion {
     private static String CLASS = "org.mariadb.jdbc.Driver";
-    private static String url="jdbc:mariadb://localhost/siglo21university";
+    private static String url="jdbc:mariadb://localhost/siglo21university_1";
     private static String usuario="root";
     private static String password="";
 
