@@ -4,7 +4,9 @@
  */
 package d.Vistas;
 
+import c.AccesoDatos.alumnoData;
 import c.AccesoDatos.inscripcionData;
+import c.AccesoDatos.materiaData;
 
 /**
  *
@@ -12,14 +14,19 @@ import c.AccesoDatos.inscripcionData;
  */
 public class ManejoDeInscripciones extends javax.swing.JInternalFrame {
     
-    inscripcionData InscripcionData;
+    private inscripcionData InscripcionData;
+    private materiaData matData;
+    private alumnoData alumData;
+    
     
     /**
      * Creates new form Inscripcion
      */
-    public ManejoDeInscripciones(inscripcionData InscripcionData) {
+    public ManejoDeInscripciones(inscripcionData InscripcionData, materiaData matData, alumnoData alumData) {
         initComponents();
         this.InscripcionData = InscripcionData;
+        this.alumData = alumData;
+        this.matData = matData;
     }
 
     /**

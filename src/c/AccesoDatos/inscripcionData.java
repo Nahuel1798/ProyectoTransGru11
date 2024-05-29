@@ -1,5 +1,6 @@
 package c.AccesoDatos;
 
+
 import b.Entidades.Conexion;
 import b.Entidades.alumno;
 import b.Entidades.inscripcion;
@@ -16,8 +17,10 @@ public class inscripcionData {
     private materiaData md = new materiaData();
     private alumnoData ad = new alumnoData();
 
-    public inscripcionData() {
+    public inscripcionData(materiaData md, alumnoData ad) {
         con = (Connection) Conexion.getConexion();
+        this.md = md;
+        this.ad = ad;
     }
 
         public void guardarInscripcion(inscripcion insc) {

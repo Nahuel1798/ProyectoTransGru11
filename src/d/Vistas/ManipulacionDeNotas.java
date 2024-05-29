@@ -5,6 +5,7 @@
 package d.Vistas;
 
 import c.AccesoDatos.alumnoData;
+import c.AccesoDatos.inscripcionData;
 
 /**
  *
@@ -12,14 +13,16 @@ import c.AccesoDatos.alumnoData;
  */
 public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
     
-    private final alumnoData AlumnoData;
+    private alumnoData AlumnoData;
+    private inscripcionData inscData;
 
     /**
      * Creates new form ManipulacionDeNotas
      */
-    public ManipulacionDeNotas(alumnoData AlumnoData) {
+    public ManipulacionDeNotas(alumnoData AlumnoData, inscripcionData inscData) {
         initComponents();
         this.AlumnoData = AlumnoData;
+        this.inscData = inscData;
     }
 
     /**

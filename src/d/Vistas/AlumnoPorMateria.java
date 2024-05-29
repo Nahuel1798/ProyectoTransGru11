@@ -4,6 +4,9 @@
  */
 package d.Vistas;
 
+import c.AccesoDatos.inscripcionData;
+import c.AccesoDatos.materiaData;
+
 
 /**
  *
@@ -12,11 +15,17 @@ package d.Vistas;
 public class AlumnoPorMateria extends javax.swing.JInternalFrame {
     
 
+    
+    private materiaData matData;
+    private inscripcionData inscData;
+    
     /**
      * Creates new form AlumnoPorMateria
      */
-    public AlumnoPorMateria() {
+    public AlumnoPorMateria(materiaData matData, inscripcionData inscData) {
         initComponents();
+        this.inscData = inscData;
+        this.matData = matData;
        
     }
 

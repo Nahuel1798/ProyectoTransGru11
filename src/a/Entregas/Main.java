@@ -110,7 +110,7 @@ public class Main {
 //          materia.eliminarMateria(materiaAEliminar);
 
         //Creando inscripcionData (Anda todo Ok)
-        inscripcionData inscData = new inscripcionData();
+//       inscripcionData inscData = new inscripcionData(materia, alumno );
 
         
 //            alumno stampa = alumno.buscarAlumnoPorDni(42207510);
@@ -136,9 +136,9 @@ public class Main {
 //        }
 
 
-        for(materia materias:inscData.obtenerMateriasNOCursadas(1)){
-            System.out.println("nombre " + materias.getNombre());
-        }
+//        for(materia materias:inscData.obtenerMateriasNOCursadas(1)){
+//            System.out.println("nombre " + materias.getNombre());
+//        }
         
         
         

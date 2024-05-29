@@ -7,6 +7,9 @@ package d.Vistas;
 import c.AccesoDatos.alumnoData;
 import c.AccesoDatos.inscripcionData;
 import c.AccesoDatos.materiaData;
+import java.beans.PropertyVetoException;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,7 +17,7 @@ import c.AccesoDatos.materiaData;
  */
 public class inicio extends javax.swing.JFrame {
 
-    jInternalFrame frameInicio = null;
+    JInternalFrame frameInicio = null;
     AlumnoPorMateria alumnXMateria;
     FormularioDeAlumno formAlumn;
     FormularioDeMateria formMateria;
@@ -28,7 +31,7 @@ public class inicio extends javax.swing.JFrame {
     public inicio() {
         initComponents();
         this.AlumnoData = new alumnoData();
-        this.InsData = new inscripcionData(MatData, AlumnoData);
+        this.InsData = new inscripcionData(MatData,AlumnoData);
         this.MatData = new materiaData();
         //AlumnoData
         formAlumn = new FormularioDeAlumno(AlumnoData);
@@ -37,18 +40,34 @@ public class inicio extends javax.swing.JFrame {
         formMateria = new FormularioDeMateria(MatData);
         Escritorio.add(formMateria);
         //Inscripcion
-        manDeIns = new ManejoDeInscripciones(InsData);
+        manDeIns = new ManejoDeInscripciones(InsData, MatData, AlumnoData);
         Escritorio.add(manDeIns);
         //Manipulacion De Notas
-        manDeNotas = new ManipulacionDeNotas(AlumnoData);
+        manDeNotas = new ManipulacionDeNotas(AlumnoData, InsData);
         Escritorio.add(manDeNotas);
         //AlumnoPorMateria
-        alumnXMateria = new AlumnoPorMateria();
-        Escritorio.add(alumnXMateria);
+        alumnXMateria = new AlumnoPorMateria(MatData, InsData);
+        Escritorio.add(alumnXMateria);               
+    }
+    
+    
+    private void frameInicio(JInternalFrame jI){
+        if(frameInicio != null){
+            frameInicio.hide();
+        }
+        frameInicio = jI;
+        frameInicio.setVisible(true);
+        frameInicio.setLocation(0,0);
+        frameInicio.moveToFront();
         
-        
+        try{            
+            frameInicio.setSelected(true);            
+        }catch(PropertyVetoException ex){
+            JOptionPane.showMessageDialog(null, "No se puede abrir" );
+        }
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,14 +80,14 @@ public class inicio extends javax.swing.JFrame {
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jFormAlum = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jFormMat = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jManejoInsc = new javax.swing.JMenuItem();
+        jManejoNotas = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jAlumXMateria = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -93,8 +112,13 @@ public class inicio extends javax.swing.JFrame {
         jMenu1.setForeground(new java.awt.Color(0, 0, 0));
         jMenu1.setText("Alumno");
 
-        jMenuItem1.setText("Formulario de Alumno");
-        jMenu1.add(jMenuItem1);
+        jFormAlum.setText("Formulario de Alumno");
+        jFormAlum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormAlumActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jFormAlum);
 
         jMenuBar1.add(jMenu1);
 
@@ -102,8 +126,13 @@ public class inicio extends javax.swing.JFrame {
         jMenu2.setForeground(new java.awt.Color(0, 0, 0));
         jMenu2.setText("Materia");
 
-        jMenuItem2.setText("Formulario de Materia");
-        jMenu2.add(jMenuItem2);
+        jFormMat.setText("Formulario de Materia");
+        jFormMat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormMatActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jFormMat);
 
         jMenuBar1.add(jMenu2);
 
@@ -111,11 +140,21 @@ public class inicio extends javax.swing.JFrame {
         jMenu3.setForeground(new java.awt.Color(0, 0, 0));
         jMenu3.setText("Administracion");
 
-        jMenuItem3.setText("Manejo de Inscripciones");
-        jMenu3.add(jMenuItem3);
+        jManejoInsc.setText("Manejo de Inscripciones");
+        jManejoInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jManejoInscActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jManejoInsc);
 
-        jMenuItem5.setText("Manipulacion de Notas");
-        jMenu3.add(jMenuItem5);
+        jManejoNotas.setText("Manipulacion de Notas");
+        jManejoNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jManejoNotasActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jManejoNotas);
 
         jMenuBar1.add(jMenu3);
 
@@ -123,14 +162,24 @@ public class inicio extends javax.swing.JFrame {
         jMenu4.setForeground(new java.awt.Color(0, 0, 0));
         jMenu4.setText("Consultas");
 
-        jMenuItem4.setText("Alumnos por Materia");
-        jMenu4.add(jMenuItem4);
+        jAlumXMateria.setText("Alumnos por Materia");
+        jAlumXMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAlumXMateriaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jAlumXMateria);
 
         jMenuBar1.add(jMenu4);
 
         jMenu5.setBackground(new java.awt.Color(102, 102, 102));
         jMenu5.setForeground(new java.awt.Color(0, 0, 0));
         jMenu5.setText("Salir");
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -143,12 +192,47 @@ public class inicio extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio)
+            .addComponent(Escritorio, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jFormAlumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormAlumActionPerformed
+       
+        frameInicio(formAlumn);
+    }//GEN-LAST:event_jFormAlumActionPerformed
+
+    
+    private void jFormMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormMatActionPerformed
+        
+        frameInicio(formMateria);     
+    }//GEN-LAST:event_jFormMatActionPerformed
+
+    
+    private void jManejoInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jManejoInscActionPerformed
+
+        frameInicio(manDeIns);
+    }//GEN-LAST:event_jManejoInscActionPerformed
+
+    
+    private void jManejoNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jManejoNotasActionPerformed
+        
+        frameInicio(manDeNotas);
+    }//GEN-LAST:event_jManejoNotasActionPerformed
+
+    
+    private void jAlumXMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAlumXMateriaActionPerformed
+        
+        frameInicio(alumnXMateria);
+    }//GEN-LAST:event_jAlumXMateriaActionPerformed
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenu5ActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -186,16 +270,16 @@ public class inicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JMenuItem jAlumXMateria;
+    private javax.swing.JMenuItem jFormAlum;
+    private javax.swing.JMenuItem jFormMat;
+    private javax.swing.JMenuItem jManejoInsc;
+    private javax.swing.JMenuItem jManejoNotas;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }
