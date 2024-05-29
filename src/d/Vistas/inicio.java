@@ -4,17 +4,49 @@
  */
 package d.Vistas;
 
+import c.AccesoDatos.alumnoData;
+import c.AccesoDatos.inscripcionData;
+import c.AccesoDatos.materiaData;
+
 /**
  *
  * @author stamp
  */
 public class inicio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form inicio
-     */
+    jInternalFrame frameInicio = null;
+    AlumnoPorMateria alumnXMateria;
+    FormularioDeAlumno formAlumn;
+    FormularioDeMateria formMateria;
+    ManejoDeInscripciones manDeIns;
+    ManipulacionDeNotas manDeNotas;
+
+    alumnoData AlumnoData;
+    inscripcionData InsData;
+    materiaData MatData;
+
     public inicio() {
         initComponents();
+        this.AlumnoData = new alumnoData();
+        this.InsData = new inscripcionData(MatData, AlumnoData);
+        this.MatData = new materiaData();
+        //AlumnoData
+        formAlumn = new FormularioDeAlumno(AlumnoData);
+        Escritorio.add(formAlumn);
+        //MateriaData
+        formMateria = new FormularioDeMateria(MatData);
+        Escritorio.add(formMateria);
+        //Inscripcion
+        manDeIns = new ManejoDeInscripciones(InsData);
+        Escritorio.add(manDeIns);
+        //Manipulacion De Notas
+        manDeNotas = new ManipulacionDeNotas(AlumnoData);
+        Escritorio.add(manDeNotas);
+        //AlumnoPorMateria
+        alumnXMateria = new AlumnoPorMateria();
+        Escritorio.add(alumnXMateria);
+        
+        
     }
 
     /**
@@ -26,7 +58,7 @@ public class inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -41,18 +73,18 @@ public class inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jDesktopPane1.setBackground(new java.awt.Color(102, 102, 102));
-        jDesktopPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 51, 153), null, null));
+        Escritorio.setBackground(new java.awt.Color(102, 102, 102));
+        Escritorio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 51, 153), null, null));
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 406, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 293, Short.MAX_VALUE)
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 283, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBackground(new java.awt.Color(102, 102, 102));
@@ -107,11 +139,11 @@ public class inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(Escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(Escritorio)
         );
 
         pack();
@@ -153,7 +185,7 @@ public class inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
