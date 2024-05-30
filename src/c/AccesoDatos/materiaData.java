@@ -118,7 +118,6 @@ public class materiaData {
             materia Materias;
             while (rs.next()) {
                 Materias = new materia(); 
-
                 Materias.setIdMateria(rs.getInt("idMateria"));
                 Materias.setNombre(rs.getString("Nombre"));
                 Materias.setAño(rs.getInt("Año"));

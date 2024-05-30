@@ -6,8 +6,10 @@ package d.Vistas;
 
 import b.Entidades.alumno;
 import c.AccesoDatos.alumnoData;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -33,6 +35,16 @@ public class FormularioDeAlumno extends javax.swing.JInternalFrame {
             jtxtNombre.setText("");
             checkEstado.setSelected(false);
             jdateFN.setCalendar(null);
+    }
+    
+    // LocalDate -> Calendar
+    private Calendar localDateToCalendar(LocalDate ldate) {
+        ZonedDateTime zonedDateTime = ldate.atStartOfDay(ZoneId.systemDefault());
+        Instant instant = zonedDateTime.toInstant();
+        Date date = Date.from(instant);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
     }
 
     /**
@@ -239,8 +251,8 @@ public class FormularioDeAlumno extends javax.swing.JInternalFrame {
              jtxtApellido.setText(alum.getApellido());
              jtxtNombre.setText(alum.getNombre());
              checkEstado.setSelected(alum.isEstado());            
-//             Calendar calendar = localDateToCalendar(alum.getFechaNacimiento());
-//             jdateFN.setCalendar(calendar);
+             Calendar calendar = localDateToCalendar(alum.getFechaNacimiento());
+             jdateFN.setCalendar(calendar);
         }
         
         
@@ -284,10 +296,24 @@ public class FormularioDeAlumno extends javax.swing.JInternalFrame {
        boolean resultado;
        if(alum == null){
            alum = new alumno(dni,apellido,nombre,fechaNacimiento,estado);
-           //resultado = AlumnoData.guardarAlumno(alum);
+           AlumnoData.guardarAlumno(alum);
+           resultado=true;
+       }else{
+           alum.setDni(dni);
+           alum.setNombre(nombre);
+           alum.setApellido(apellido);
+           alum.setFechaNacimiento(fechaNacimiento);
+           alum.setEstado(estado);
+           AlumnoData.modificarAlumno(alum);
+           resultado=true;
        }
        
-        
+       //imprimir resultado
+        if (resultado) {
+            JOptionPane.showMessageDialog(this, "Alumno guardado.");
+        }else{
+            JOptionPane.showMessageDialog(this, "Alumno guardado.");
+        }
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed

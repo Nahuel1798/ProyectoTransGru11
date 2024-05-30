@@ -4,9 +4,15 @@
  */
 package d.Vistas;
 
+import b.Entidades.alumno;
+import b.Entidades.inscripcion;
+import b.Entidades.materia;
 import c.AccesoDatos.alumnoData;
 import c.AccesoDatos.inscripcionData;
 import c.AccesoDatos.materiaData;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,7 +23,12 @@ public class ManejoDeInscripciones extends javax.swing.JInternalFrame {
     private inscripcionData InscripcionData;
     private materiaData matData;
     private alumnoData alumData;
-    
+    private DefaultTableModel Boquita = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int i, int i1) {
+            return false;
+        }
+    };
     
     /**
      * Creates new form Inscripcion
@@ -27,6 +38,66 @@ public class ManejoDeInscripciones extends javax.swing.JInternalFrame {
         this.InscripcionData = InscripcionData;
         this.alumData = alumData;
         this.matData = matData;
+        armarCabecera();
+    }
+    private void armarCabecera(){
+        Boquita.addColumn("ID");
+        Boquita.addColumn("Nombre");
+        Boquita.addColumn("Año");
+        jtTabla.setModel(Boquita);
+    }
+    
+    private void configurarCombo(){
+        List<alumno> listaAlumno = alumData.listarAlumnos();
+        jcCombo.removeAllItems();
+        if (listaAlumno.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay alumnos a los cuales inscribir o desinscribir en materias.");
+            jcCombo.setSelectedIndex(-1);
+        }else{
+//            for (alumno alum : listaAlumno) {
+//                jcCombo.addItem(alum);
+//            }
+        }
+    }
+    public void adminDesincipcion(){
+        Boquita.setRowCount(0);
+        if (jcCombo.getSelectedIndex() != -1) {
+            alumno alum = (alumno) jcCombo.getSelectedItem();
+            List<materia> listaMateria = InscripcionData.obtenerMateriasCursadas(alum.getIdAlumno());
+            
+            if (listaMateria.isEmpty()) {
+                jbAnularIns.setEnabled(false);
+            }else{
+                for (materia mat : listaMateria) {
+                Boquita.addRow(new Object[]{mat.getIdMateria(),mat.getNombre(),mat.getAño()});
+            }
+            
+            jbAnularIns.setEnabled(isIcon);
+        }   
+        }else{
+            jbAnularIns.setEnabled(false);
+        }
+        jbIns.setEnabled(false);
+    }
+    
+    private void adminInscripcion(){
+        Boquita.setRowCount(0);
+        
+        if (jcCombo.getSelectedIndex() != -1) {
+            alumno alum = (alumno) jcCombo.getSelectedItem();
+            List<materia> listaMatNoCursada = InscripcionData.obtenerMateriasNOCursadas(alum.getIdAlumno());
+            if (listaMatNoCursada.isEmpty()) {
+                jbIns.setEnabled(false);
+            }else{
+                for (materia mat: listaMatNoCursada) {
+                    Boquita.addRow(new Object[]{mat.getIdMateria(),mat.getNombre(),mat.getAño()});
+                }
+                jbIns.setEnabled(true);
+            }
+        }else{
+            jbIns.setEnabled(false);
+        }
+        jbAnularIns.setEnabled(false);
     }
 
     /**
@@ -54,11 +125,34 @@ public class ManejoDeInscripciones extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setTitle("INSCRIPCION");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         jLabel1.setText("Inscripcion");
 
         jLabel6.setText("Seleccione un alumno:");
+
+        jcCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcComboActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Listado de Materias");
 
@@ -80,10 +174,25 @@ public class ManejoDeInscripciones extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtTabla);
 
         jbIns.setText("Inscribir");
+        jbIns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbInsActionPerformed(evt);
+            }
+        });
 
         jbAnularIns.setText("Anular Inscripcion");
+        jbAnularIns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAnularInsActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,6 +259,86 @@ public class ManejoDeInscripciones extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcComboActionPerformed
+        // TODO add your handling code here:
+        
+        if (jrMatIns.isSelected()) {
+            adminDesincipcion();
+        }else{
+            adminInscripcion();
+        }
+    }//GEN-LAST:event_jcComboActionPerformed
+
+    private void jbInsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInsActionPerformed
+        // TODO add your handling code here:
+        alumno alum = (alumno) jcCombo.getSelectedItem();
+        
+        switch (jtTabla.getSelectedRowCount()){
+            case 0:
+                JOptionPane.showMessageDialog(this, "Para inscribir al alumno en una materia primero debe seleccionar la misma en la lista, haciendole click");
+                break;
+            case 1:
+                int filaSelec = jtTabla.getSelectedRow();
+                int idMat = (int) jtTabla.getValueAt(filaSelec, 0);
+                String nombreMat = (String) jtTabla.getValueAt(filaSelec, 1);
+                int anio = (int) jtTabla.getValueAt(filaSelec, 2);
+                materia mat = new materia(idMat,nombreMat,anio,true);
+                
+                inscripcion inscrip = new inscripcion(alum,mat,0);
+                
+                if (InscripcionData.guardarInscripcion(inscrip)) {
+                    adminInscripcion();
+                    JOptionPane.showMessageDialog(this, "se he inscripto al alumno ");
+                }else{
+                    JOptionPane.showMessageDialog(this, "no se he inscripto al alumno ");
+                }
+                break;
+                
+            default:
+                JOptionPane.showMessageDialog(this, "debe seleccionar una sola materia de la lista ");
+        }
+    }//GEN-LAST:event_jbInsActionPerformed
+
+    private void jbAnularInsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInsActionPerformed
+        // TODO add your handling code here:
+        alumno alum=(alumno) jcCombo.getSelectedItem();
+        
+        switch(jtTabla.getSelectedRowCount()){
+            case 0:
+                JOptionPane.showMessageDialog(this, "selecciones bien las filas");
+                break;
+            case 1:
+                int filaSelec = jtTabla.getSelectedRow();
+                String nombreMat = (String) jtTabla.getValueAt(filaSelec, 1);
+                int idMat = (int) jtTabla.getValueAt(filaSelec, 0);
+                
+                if (InscripcionData.borrarInscripcionMA(alum.getIdAlumno(), idMat)) {
+                    adminInscripcion();
+                    JOptionPane.showMessageDialog(this, "se ha borrado la inscripcion del alumno");      
+                }else{
+                    JOptionPane.showMessageDialog(this, "no se ha podido borrar la inscripcion del alumno"); 
+                }
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "debe seleccionar solo una materia de la lista"); 
+        }
+    }//GEN-LAST:event_jbAnularInsActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        // TODO add your handling code here:
+        configurarCombo();
+        List<materia> listaMateria = matData.listarMaterias();
+        if (listaMateria.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay materia en la cuales inscribir o desincribir alumnos");
+            System.out.println("no hay materias en la cuales inscribir o desinscribir alumnos");
+        }
+    }//GEN-LAST:event_formInternalFrameActivated
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -23,8 +23,8 @@ public class inscripcionData {
         this.ad = ad;
     }
 
-        public void guardarInscripcion(inscripcion insc) {
-
+        public boolean guardarInscripcion(inscripcion insc) {
+            boolean resultado = true;
             String sql = "INSERT INTO inscripcion(idIncripto,idAlumno,idMateria,Nota) VALUES (?,?,?,?)";
             try {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -40,9 +40,10 @@ public class inscripcionData {
                 }
                 ps.close();
             } catch (SQLException ex) {
+                resultado=false;
                 JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Inscripcion" + ex.getMessage());
             }
-
+            return resultado;
 
     }
 
@@ -71,8 +72,8 @@ public class inscripcionData {
             }
         }
 
-        public void borrarInscripcionMA(int idAlumno, int idMateria){
-        
+        public boolean borrarInscripcionMA(int idAlumno, int idMateria){
+        boolean resultado = true;
         try {
             String sql = "DELETE FROM inscripcion WHERE idAlumno = ? and idMateria = ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -85,9 +86,10 @@ public class inscripcionData {
             }
             ps.close();
         } catch (SQLException e) {
+            resultado=false;
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Inscripcion");
         }
-  
+        return resultado;
     }
 
     

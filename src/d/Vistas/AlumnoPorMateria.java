@@ -4,8 +4,13 @@
  */
 package d.Vistas;
 
+import b.Entidades.alumno;
+import b.Entidades.materia;
 import c.AccesoDatos.inscripcionData;
 import c.AccesoDatos.materiaData;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -13,8 +18,12 @@ import c.AccesoDatos.materiaData;
  * @author stamp
  */
 public class AlumnoPorMateria extends javax.swing.JInternalFrame {
-    
-
+    private DefaultTableModel Boquita = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int fil, int col) {
+            return false;
+        }
+    };
     
     private materiaData matData;
     private inscripcionData inscData;
@@ -26,7 +35,47 @@ public class AlumnoPorMateria extends javax.swing.JInternalFrame {
         initComponents();
         this.inscData = inscData;
         this.matData = matData;
-       
+        this.Boquita = (DefaultTableModel) jtTabla.getModel();
+        armarCabecera();
+    }
+    
+    private void armarCabecera(){
+        Boquita.addColumn("ID");
+        Boquita.addColumn("DNI");
+        Boquita.addColumn("Apellido");
+        jtTabla.setModel(Boquita);
+    }
+    
+    private void configComboBox(){
+        //eliminar todo los itemens 
+        jcCombo.removeAllItems();
+        //obtener todas las materias
+        List<materia> listaMateria = matData.listarMaterias();
+        
+        if (listaMateria.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay ninguna materia.");
+            jcCombo.setSelectedIndex(-1);
+        }else{
+            for (materia mate : listaMateria) {
+//                jcCombo.addItem(mat);
+            }
+        }
+    }
+    
+    private void adminConsu(){
+        Boquita.setRowCount(0);
+        if (jcCombo.getSelectedIndex() != -1) {
+            materia mat = (materia) jcCombo.getSelectedItem();
+            List<alumno> listaAlumno = inscData.obtenerAlumnosXMateria(mat.getIdMateria());
+            
+            if (listaAlumno.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "no hay alumnos a esta materia");
+            }else{
+                for (alumno alum : listaAlumno) {
+                    Boquita.addRow(new Object[]{alum.getIdAlumno(),alum.getDni(),alum.getApellido(),alum.getNombre()});
+                }
+            }
+        }
     }
 
     /**
@@ -45,9 +94,21 @@ public class AlumnoPorMateria extends javax.swing.JInternalFrame {
         jtTabla = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
         jLabel1.setText("Listado de Alumno Por Materia");
 
         jLabel2.setText("Seleccione una Materia:");
+
+        jcCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcComboActionPerformed(evt);
+            }
+        });
 
         jtTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,6 +124,11 @@ public class AlumnoPorMateria extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtTabla);
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,14 +144,15 @@ public class AlumnoPorMateria extends javax.swing.JInternalFrame {
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(112, 112, 112))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(27, 27, 27))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,15 +162,27 @@ public class AlumnoPorMateria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jcCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcComboActionPerformed
+        adminConsu();
+    }//GEN-LAST:event_jcComboActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.hide();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        configComboBox();
+    }//GEN-LAST:event_formComponentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

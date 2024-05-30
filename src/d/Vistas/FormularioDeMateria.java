@@ -4,6 +4,7 @@
  */
 package d.Vistas;
 
+import b.Entidades.alumno;
 import b.Entidades.materia;
 import c.AccesoDatos.materiaData;
 import javax.swing.JOptionPane;
@@ -21,6 +22,13 @@ public class FormularioDeMateria extends javax.swing.JInternalFrame {
     public FormularioDeMateria(materiaData MateriaData) {
         initComponents();
         this.MateriaData = MateriaData;
+    }
+    
+    private void limpiar(){
+            jtxtCodigo.setText("");
+            jtxtNombre.setText("");
+            checkEstado.setSelected(false);
+            jtxtAño.setText("");
     }
 
     /**
@@ -77,15 +85,35 @@ public class FormularioDeMateria extends javax.swing.JInternalFrame {
 
         jbNuevo.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbEliminar.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,10 +206,104 @@ public class FormularioDeMateria extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No se encontro la materia");
         }else{
             jtxtNombre.setText(mat.getNombre());
-            jtxtAño.setText(mat.getAño());
-            checkEstado.setSelected(true);
+            jtxtAño.setText(Integer.toString(mat.getAño()));
+            checkEstado.setSelected(mat.isEstado());
+            JOptionPane.showMessageDialog(this, "Se encontro la materia");
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        // TODO add your handling code here:
+        limpiar();
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // TODO add your handling code here:
+        String codigo = jtxtCodigo.getText();
+        String nombre = jtxtNombre.getText();
+        String anio = jtxtAño.getText();
+        boolean estado = checkEstado.isSelected();
+        System.out.println(estado);
+        
+        if (codigo.isBlank()||nombre.isBlank()||anio.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben ser rellenados.");
+            return;
+        }
+        
+        //validar el id de la materia
+        int idMateria,anioMateria;
+        try{
+            idMateria = Integer.parseInt(codigo);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "El código debe ser un número entero sin decimales.");
+            return;
+        }
+        try{
+            anioMateria = Integer.parseInt(anio);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "El año debe ser un número entero sin decimales.");
+            return;
+        }
+        
+        //buscar materia
+        materia mat = MateriaData.buscarMateria(idMateria);
+        
+        //guardar resultado 
+        boolean result;
+        
+        if (mat==null) {
+            mat = new materia(idMateria,nombre,anioMateria,estado);
+            MateriaData.guardarMateria(mat);
+            result=true;
+        }else{
+            mat.setIdMateria(idMateria);
+            mat.setNombre(nombre);
+            mat.setAño(anioMateria);
+            mat.setEstado(estado);
+            MateriaData.modificarMateria(mat);
+        }
+        
+        //imprimir resultado
+//        if (result) {
+//            JOptionPane.showMessageDialog(this, "Materia guardada.");
+//        }else{
+//            JOptionPane.showMessageDialog(this, "Materia no guardada.");
+//        }
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        int idMateria;
+        
+        try{
+            idMateria = Integer.parseInt(jtxtCodigo.getText());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "El código debe ser un número entero sin decimales.");
+            return;
+        }
+        materia mat = MateriaData.buscarMateria(idMateria);
+        if (mat == null) {
+            JOptionPane.showMessageDialog(this, "no hay materia con este codigo");
+            return;
+        } else {
+            if (mat.isEstado()==false) {
+                JOptionPane.showMessageDialog(this, "esta materia ya esta dado de baja");
+                return;
+            }
+        }
+        
+        //se econtro materia
+//        if (MateriaData.eliminarMateria(mat.getIdMateria())) {
+//            limpiar();
+//        }else{
+//            
+//        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+    }//GEN-LAST:event_jbSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
