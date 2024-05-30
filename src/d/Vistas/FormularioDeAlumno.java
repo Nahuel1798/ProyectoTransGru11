@@ -99,9 +99,19 @@ public class FormularioDeAlumno extends javax.swing.JInternalFrame {
 
         jbEliminar.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         jLabel6.setText("Alumno");
@@ -274,11 +284,51 @@ public class FormularioDeAlumno extends javax.swing.JInternalFrame {
        boolean resultado;
        if(alum == null){
            alum = new alumno(dni,apellido,nombre,fechaNacimiento,estado);
-           resultado = AlumnoData.guardarAlumno(alum);
+           //resultado = AlumnoData.guardarAlumno(alum);
        }
        
         
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+        
+    }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        
+         //Validar DNI
+        int dni;
+        try{
+            
+            dni = Integer.parseInt(jtxtDocumento.getText());
+            
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Dni Incorrecto" );
+            return;
+        }
+        
+        //buscar alumno
+        alumno alum = AlumnoData.buscarAlumnoPorDni(dni);
+        if(alum==null){
+            JOptionPane.showMessageDialog(null, "No se encontro el alumno vinculado al DNI");
+            return;
+        }else{
+            if(alum.isEstado()==false){
+                JOptionPane.showMessageDialog(null, "El alumno esta dado de baja");
+                return;
+            }
+        }
+        //eliminar alumno y limpiar los campos 
+//        if(AlumnoData.eliminarAlumno(alum.getIdAlumno())){          corregir 
+//            jtxtApellido.setText("");
+//            jtxtNombre.setText("");
+//            jdateFN.setCalendar(null);
+//            JOptionPane.showMessageDialog(null, "Alumno Eliminado con exito");      
+//        }
+        
+    }//GEN-LAST:event_jbEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

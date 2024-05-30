@@ -4,7 +4,9 @@
  */
 package d.Vistas;
 
+import b.Entidades.materia;
 import c.AccesoDatos.materiaData;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -67,6 +69,11 @@ public class FormularioDeMateria extends javax.swing.JInternalFrame {
 
         jbBuscar.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         jbNuevo.setFont(new java.awt.Font("Ebrima", 1, 12)); // NOI18N
         jbNuevo.setText("Nuevo");
@@ -150,6 +157,31 @@ public class FormularioDeMateria extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        int idMateria;
+        try{
+            idMateria = Integer.parseInt(jtxtCodigo.getText());           
+            
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "El Codigo debe ser correcto");
+            return;
+        }
+        
+        //buscar materia
+        materia mat = MateriaData.buscarMateria(idMateria);
+        if(mat == null){
+            jtxtNombre.setText("");
+            jtxtAño.setText("");
+            checkEstado.setSelected(false);
+            JOptionPane.showMessageDialog(this, "No se encontro la materia");
+        }else{
+            jtxtNombre.setText(mat.getNombre());
+            jtxtAño.setText(mat.getAño());
+            checkEstado.setSelected(true);
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
