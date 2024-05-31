@@ -293,11 +293,11 @@ public class FormularioDeMateria extends javax.swing.JInternalFrame {
         }
         
         //se econtro materia
-//        if (MateriaData.eliminarMateria(mat.getIdMateria())) {
-//            limpiar();
-//        }else{
-//            
-//        }
+        if (MateriaData.eliminarMateria(mat.getIdMateria())) {
+            limpiar();
+        }else{
+            
+        }
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed

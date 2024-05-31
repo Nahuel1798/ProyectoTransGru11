@@ -4,8 +4,13 @@
  */
 package d.Vistas;
 
+import b.Entidades.alumno;
+import b.Entidades.inscripcion;
 import c.AccesoDatos.alumnoData;
 import c.AccesoDatos.inscripcionData;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,6 +20,13 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
     
     private alumnoData AlumnoData;
     private inscripcionData inscData;
+    
+    private DefaultTableModel Boquita = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int i, int i1) {
+            return false;
+        }
+    };
 
     /**
      * Creates new form ManipulacionDeNotas
@@ -23,6 +35,48 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
         initComponents();
         this.AlumnoData = AlumnoData;
         this.inscData = inscData;
+    }
+    
+    private void armarCabecera(){
+        Boquita.addColumn("ID");
+        Boquita.addColumn("Nombre");
+        Boquita.addColumn("Año");
+        jtTabla.setModel(Boquita);
+    }
+    
+    private void configurarComboBox(){
+        jcCombo.removeAllItems();
+        List<alumno> listaAlumno = AlumnoData.listarAlumnos();
+        if(listaAlumno.isEmpty()){
+            JOptionPane.showMessageDialog(this, "No hay alumno cuya nota establecer");
+            jcCombo.setSelectedIndex(-1);
+            
+        }else{
+//            for (alumno elem : listaAlumno) {
+//                jcCombo.addItem(elem);
+//            }
+        }
+    
+        }
+    
+    private void manipularNotas(){
+        Boquita.setRowCount(0);
+        if(jcCombo.getSelectedIndex() != -1){
+            alumno alum = (alumno)jcCombo.getSelectedItem();
+            List<inscripcion> listaInscripcion = inscData.obtenerInscripciones();
+            if(listaInscripcion.isEmpty()){
+                jbGuardar.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "No hay inscripcion que corresponda");
+            }else{
+                for (inscripcion insc : listaInscripcion) {
+                    Boquita.addRow(new Object[]{
+                        insc.getMateria().getIdMateria(),
+                        insc.getMateria().getNombre(),
+                        insc.getNota()
+                    });
+                }
+            }
+        }
     }
 
     /**
@@ -45,6 +99,12 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
         jLabel1.setText("Carga de Notas");
 
         jLabel2.setText("Seleccione un alumno:");
+
+        jcCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcComboActionPerformed(evt);
+            }
+        });
 
         jtTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,6 +167,13 @@ public class ManipulacionDeNotas extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcComboActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+    }//GEN-LAST:event_jcComboActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

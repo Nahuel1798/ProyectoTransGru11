@@ -59,6 +59,7 @@ public class ManejoDeInscripciones extends javax.swing.JInternalFrame {
 //            }
         }
     }
+    
     public void adminDesincipcion(){
         Boquita.setRowCount(0);
         if (jcCombo.getSelectedIndex() != -1) {

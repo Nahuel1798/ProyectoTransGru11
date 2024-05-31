@@ -346,13 +346,15 @@ public class FormularioDeAlumno extends javax.swing.JInternalFrame {
                 return;
             }
         }
+        
         //eliminar alumno y limpiar los campos 
-//        if(AlumnoData.eliminarAlumno(alum.getIdAlumno())){          corregir 
-//            jtxtApellido.setText("");
-//            jtxtNombre.setText("");
-//            jdateFN.setCalendar(null);
-//            JOptionPane.showMessageDialog(null, "Alumno Eliminado con exito");      
-//        }
+        
+        if(AlumnoData.eliminarAlumno(alum.getIdAlumno())){
+            jtxtApellido.setText("");
+            jtxtNombre.setText("");
+            jdateFN.setCalendar(null);
+            JOptionPane.showMessageDialog(null, "Alumno Eliminado con exito");      
+        }
         
     }//GEN-LAST:event_jbEliminarActionPerformed
 

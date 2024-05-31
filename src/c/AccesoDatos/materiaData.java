@@ -90,7 +90,8 @@ public class materiaData {
         
     }
     
-    public void eliminarMateria(int id){
+    public boolean eliminarMateria(int id){
+        boolean resultado = true;
         
         try {
             String sql = "UPDATE materia SET estado = 0 WHERE idMateria = ?";
@@ -103,9 +104,10 @@ public class materiaData {
             }
             ps.close();
         } catch (SQLException e) {
+            resultado = false;
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia");
         }
-        
+        return resultado;
     }
     
     public List<materia> listarMaterias() {

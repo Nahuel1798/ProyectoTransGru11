@@ -125,8 +125,8 @@ public class alumnoData {
         
     }
     
-    public void eliminarAlumno(int id){
-        
+    public boolean eliminarAlumno(int id){
+        boolean resultado = true;
         try {
             String sql = "UPDATE alumno SET estado = 0 WHERE idAlumno = ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -138,8 +138,10 @@ public class alumnoData {
             }
             ps.close();
         } catch (SQLException e) {
+            resultado = false;
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno");
         }
+        return resultado;
         
     }
     
