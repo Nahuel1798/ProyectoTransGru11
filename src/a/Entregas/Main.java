@@ -7,10 +7,12 @@ import b.Entidades.materia;
 import c.AccesoDatos.alumnoData;
 import c.AccesoDatos.inscripcionData;
 import c.AccesoDatos.materiaData;
+import d.Vistas.MainFrame;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,10 +23,19 @@ public class Main {
     public static void main(String[] args) {
 
         //Establecer la conexion
-        //Connection con = (Connection) Conexion.getConexion();
-        
+        // Establecer la conexion
+        Connection con = Conexion.getConexion();
+        if (con == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        MainFrame.ejecutar(args);
+    
+    
+    
         //Creando alumnoData (Anda todo ok)
-        alumnoData alumno = new alumnoData();
+        //alumnoData alumno = new alumnoData();
 
         //Creando alumnos (Anda todo ok)
 //        alumno alumno1 = new alumno(1,42207510,"Nahuel","Stampanoni",LocalDate.of(2000, Month.MARCH, 15),true);
@@ -65,7 +76,7 @@ public class Main {
 //        alumno.eliminarAlumno(alumnoAEliminar);
 
         //Creando materiaData (Anda todo ok)
-        materiaData materia = new materiaData();
+        //materiaData materia = new materiaData();
 
         //Creando materias (Anda todo ok)
 //        materia materia1 = new materia(1,"Ciencias Naturales",2020,true);

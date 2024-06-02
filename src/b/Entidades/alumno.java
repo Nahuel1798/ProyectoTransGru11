@@ -3,36 +3,34 @@ package b.Entidades;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author Nahue
- */
 public class alumno {
+
     private int idAlumno;
-    private int Dni;
-    private String Apellido;
-    private String Nombre;
+    private int dni;
+    private String nombre;
+    private String apellido;
     private LocalDate fechaNacimiento;
-    private boolean Estado;
+    private boolean estado;
 
     public alumno() {
     }
 
-    public alumno(int idAlumno, int Dni, String Apellido, String Nombre, LocalDate fechaNacimiento, boolean Estado) {
-        this.idAlumno = idAlumno;
-        this.Dni = Dni;
-        this.Apellido = Apellido;
-        this.Nombre = Nombre;
+    public alumno(int dni, String nombre, String apellido, LocalDate fechaNacimiento, boolean estado) {
+        this.idAlumno = -1;     // Luego se utilizara para denotar que el verdadero id debe ser establecido por el gestor de BD
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
-        this.Estado = Estado;
+        this.estado = estado;
     }
-    
-     public alumno(int Dni, String Apellido, String Nombre, LocalDate fechaNacimiento, boolean Estado) {    
-        this.Dni = Dni;
-        this.Apellido = Apellido;
-        this.Nombre = Nombre;
+
+    public alumno(int idAlumno, int dni, String nombre, String apellido, LocalDate fechaNacimiento, boolean estado) {
+        this.idAlumno = idAlumno;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
-        this.Estado = Estado;
+        this.estado = estado;
     }
 
     public int getIdAlumno() {
@@ -44,27 +42,27 @@ public class alumno {
     }
 
     public int getDni() {
-        return Dni;
+        return dni;
     }
 
-    public void setDni(int Dni) {
-        this.Dni = Dni;
-    }
-
-    public String getApellido() {
-        return Apellido;
-    }
-
-    public void setApellido(String Apellido) {
-        this.Apellido = Apellido;
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public LocalDate getFechaNacimiento() {
@@ -76,16 +74,22 @@ public class alumno {
     }
 
     public boolean isEstado() {
-        return Estado;
+        return estado;
     }
 
-    public void setEstado(boolean Estado) {
-        this.Estado = Estado;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
+    // Se va a utilizar en la muestra de datos en las vistas
     @Override
     public String toString() {
-        return "Alumno (" + "dni: " +  Dni + " Nombre: " + Nombre + " Apellido: " + Apellido + ")";
+        return dni + ", " + nombre + ", " + apellido;
+    }
+    
+    // Se va a utilizar para la muestra de datos por consola
+    public String mostrarAlumno(){
+        return "Alumno{" + "idAlumno=" + idAlumno + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + '}';
     }
     
     

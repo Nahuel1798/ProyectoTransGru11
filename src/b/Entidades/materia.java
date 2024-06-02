@@ -6,27 +6,27 @@ package b.Entidades;
  * @author Nahue
  */
 public class materia {
+
     private int idMateria;
-    private String Nombre;
-    private int Año;
-    private boolean Estado;
+    private String nombre;
+    private int anio;
+    private boolean estado;
 
     public materia() {
     }
 
-    public materia(String Nombre, int Año, boolean Estado) {
-        this.Nombre = Nombre;
-        this.Año = Año;
-        this.Estado = Estado;
-    }
-    
-    
-
-    public materia(int idMateria, String Nombre, int Año, boolean Estado) {
+    public materia(int idMateria, String nombre, int anio, boolean estado) {
         this.idMateria = idMateria;
-        this.Nombre = Nombre;
-        this.Año = Año;
-        this.Estado = Estado;
+        this.nombre = nombre;
+        this.anio = anio;
+        this.estado = estado;
+    }
+
+    public materia(String nombre, int anio, boolean estado) {
+        this.idMateria = -1;    // Luego se utilizara para denotar que el verdadero id debe ser establecido por el gestor de BD
+        this.nombre = nombre;
+        this.anio = anio;
+        this.estado = estado;
     }
 
     public int getIdMateria() {
@@ -38,32 +38,38 @@ public class materia {
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getAño() {
-        return Año;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setAño(int Año) {
-        this.Año = Año;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     public boolean isEstado() {
-        return Estado;
+        return estado;
     }
 
-    public void setEstado(boolean Estado) {
-        this.Estado = Estado;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
-    
+
+    // Se va a utilizar en la muestra de datos en las vistas
     @Override
     public String toString() {
-        return "Materia (" + "idMateria: " + idMateria + " Nombre: " +  Nombre + " Anio: " + Año + ")";
+        return nombre + ", " + anio;
+    }
+    
+    // Se va a utilizar para la muestra de datos por consola
+    public String mostrarMateria(){
+        return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + ", año=" + anio + ", estado=" + estado + '}';
     }
     
     

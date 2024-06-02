@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/El%20Notaloko%202.1/Documents/GitHub/ProyectoTransGru11/src/c/AccesoDatos/inscripcionData.java</file>
-            <file>file:/C:/Users/El%20Notaloko%202.1/Documents/GitHub/ProyectoTransGru11/src/c/AccesoDatos/alumnoData.java</file>
-            <file>file:/C:/Users/El%20Notaloko%202.1/Documents/GitHub/ProyectoTransGru11/src/b/Entidades/materia.java</file>
-            <file>file:/C:/Users/El%20Notaloko%202.1/Documents/GitHub/ProyectoTransGru11/src/b/Entidades/inscripcion.java</file>
-            <file>file:/C:/Users/El%20Notaloko%202.1/Documents/GitHub/ProyectoTransGru11/src/b/Entidades/alumno.java</file>
-            <file>file:/C:/Users/El%20Notaloko%202.1/Documents/GitHub/ProyectoTransGru11/src/c/AccesoDatos/materiaData.java</file>
-            <file>file:/C:/Users/El%20Notaloko%202.1/Documents/GitHub/ProyectoTransGru11/src/a/Entregas/Main.java</file>
+            <file>file:/C:/Users/Nahue/Desktop/Programacion/Laboratorio%201/3-Base%20de%20datos/ProyectoTransGru11/src/d/Vistas/AlumnoPorMateria.java</file>
+            <file>file:/C:/Users/Nahue/Desktop/Programacion/Laboratorio%201/3-Base%20de%20datos/ProyectoTransGru11/src/d/Vistas/ManejoDeInscripciones.java</file>
+            <file>file:/C:/Users/Nahue/Desktop/Programacion/Laboratorio%201/3-Base%20de%20datos/ProyectoTransGru11/src/b/Entidades/alumno.java</file>
+            <file>file:/C:/Users/Nahue/Desktop/Programacion/Laboratorio%201/3-Base%20de%20datos/ProyectoTransGru11/src/d/Vistas/FormularioDeAlumno.java</file>
         </group>
     </open-files>
 </project-private>

@@ -6,33 +6,35 @@ package b.Entidades;
  * @author Nahue
  */
 public class inscripcion {
-    private int idIncripto;
+
+    private int idInscripto;
     private alumno alumno;
     private materia materia;
-    private int Nota;
+    private int nota;       // Permanece como entero por que así se vio en el modelo de la BD pasado 
+
+    public inscripcion(int idInscripto, alumno alumno, materia materia, int nota) {
+        this.idInscripto = idInscripto;
+        this.alumno = alumno;
+        this.materia = materia;
+        this.nota = nota;
+    }
+
+    public inscripcion(alumno alumno, materia materia, int nota) {
+        this.idInscripto = -1;      // Luego se utilizara para denotar que el verdadero id debe ser establecido por el gestor de BD
+        this.alumno = alumno;
+        this.materia = materia;
+        this.nota = nota;
+    }
 
     public inscripcion() {
     }
 
-    public inscripcion(int idIncripto, alumno alumno, materia materia, int nota) {
-        this.idIncripto = idIncripto;
-        this.alumno = alumno;
-        this.materia = materia;
-        this.Nota = nota;
+    public int getIdInscripto() {
+        return idInscripto;
     }
 
-    public inscripcion(alumno alumno, materia materia, int nota) {
-        this.alumno = alumno;
-        this.materia = materia;
-        this.Nota = nota;
-    }
-
-    public int getIdIncripto() {
-        return idIncripto;
-    }
-
-    public void setIdIncripto(int idIncripto) {
-        this.idIncripto = idIncripto;
+    public void setIdInscripto(int idInscripto) {
+        this.idInscripto = idInscripto;
     }
 
     public alumno getAlumno() {
@@ -52,16 +54,29 @@ public class inscripcion {
     }
 
     public int getNota() {
-        return Nota;
+        return nota;
     }
 
     public void setNota(int nota) {
-        this.Nota = nota;
+        this.nota = nota;
     }
-
+    
     @Override
     public String toString() {
-        return "idIncripto: " + idIncripto + " idAlumno: " + alumno + " idMateria: " + materia + " Nota: " + Nota;
+        return "Inscripcion{" + "idInscripto=" + idInscripto + ", idAlumno=" + alumno.getIdAlumno() 
+                + ", dniAlumno=" + alumno.getDni() + ", apellidoAlumno=" + alumno.getApellido() 
+                + ", idMateria=" + materia.getIdMateria() + ", nombreMateria=" + materia.getNombre() 
+                +  ", nota=" + nota + '}';
+    }
+    
+    /* Este metodo existe para no generar confusion por el uso de nombres distintos en relacion con los 
+    metodos equivalentes utilizados en las otras clases del parquete 'entidades' a la hora de mostrar 
+    mensajes por consola, si bien se podría haber omitido su existencia y solo usar toString() */
+    public String mostrarInscripcion() {        
+        return "Inscripcion{" + "idInscripto=" + idInscripto + ", idAlumno=" + alumno.getIdAlumno() 
+                + ", dniAlumno=" + alumno.getDni() + ", apellidoAlumno=" + alumno.getApellido() 
+                + ", idMateria=" + materia.getIdMateria() + ", nombreMateria=" + materia.getNombre() 
+                +  ", nota=" + nota + '}';
     }
         
 }
